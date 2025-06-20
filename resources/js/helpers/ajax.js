@@ -1,0 +1,67 @@
+import { allTables } from "./datatables";
+export const datesUserRegister = (element,url) =>{
+    let tableUser;
+    $.ajax({
+        headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
+        type:'POST',
+        url:url,
+        success:function(response){
+            $('.preloader').hide();
+            let data = response.data,
+                columnas=[
+                    {
+                        data:'dni',
+                        class:'text-center'
+                    },
+                    {
+                        data:'name',
+                        class:'text-center'
+                    },
+                    {
+                        data:'lastname',
+                        class:'text-center'
+                    },
+                    {
+                        data:'email',
+                        class:'text-center'
+                    },
+                    {
+                        data:null,
+                        render:function(data, type, row){
+                                return (row.status === 1)?`
+                                    <center>
+                                        <span class="rounded-circle" style="width:15px; height:15px; display:inline-block; background-color:#239b56;"></span>
+                                    </center>
+                                `:`
+                                    <center>
+                                        <span class="rounded-circle" style="width:15px; height:15px; display:inline-block; background-color:#c0392b;"></span>
+                                    </center>
+                                `;
+                        }
+                    },
+                    {
+                        data:null,
+                        render: function (data, type, row) {
+                                let btn,response = `<center>
+                                        <button id="editUser" type="button" class="btn text-info editUser" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id=`+row.dni+`
+                                        data-name="${row.name}" data-lastname="${row.lastname}" data-email=`+row.email+`>
+                                            <i class="fa fa-edit" ></i>
+                                        </button>`;
+                                if(data.status === 1){
+                                    btn=    `<button id="deleteUser" type="button" class="btn text-danger deleteUser" data-bs-toggle="modal" data-bs-target="#modalActiveUser" data-id=`+row.dni+` data-status=`+row.status+`>
+                                                <i class="fa-solid fa-user-xmark"></i>
+                                            </button></center>`;
+                                }else{
+                                    btn=    `<button id="deleteUser" type="button" class="btn text-success deleteUser" data-bs-toggle="modal" data-bs-target="#modalActiveUser" data-id=`+row.dni+` data-status=`+row.status+`>
+                                                <i class="fa-solid fa-user-plus"></i>
+                                            </button></center>`;
+                                }
+                                return response+btn;
+                        }
+                    }
+                ];
+            tableUser = allTables(element,data,columnas);
+        }
+    });
+    return tableUser;
+}
