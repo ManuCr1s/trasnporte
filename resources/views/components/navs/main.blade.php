@@ -31,10 +31,22 @@
 		@endif
 		@if(auth()->user()->hasRole('user'))
 			<li class="mb-1">
-				<button class="text-white btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+				<button class="text-white btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#periodo-collapse" aria-expanded="false">
+					Periodo
+				</button>
+				<div class="collapse" id="periodo-collapse">
+				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small w-100 mx-3">
+					<li class="py-2"><a href="{{route('create_period')}}" class="text-white d-inline-flex text-decoration-none rounded">Crear Periodo</a></li>
+				</ul>
+				</div>
+			</li>
+		@endif
+		@if(auth()->user()->hasRole('user'))
+			<li class="mb-1">
+				<button class="text-white btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#orden-collapse" aria-expanded="false">
 					Orden Pago
 				</button>
-				<div class="collapse" id="dashboard-collapse">
+				<div class="collapse" id="orden-collapse">
 				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small w-100 mx-3">
 					<li class="py-2"><a href="#" class="text-white d-inline-flex text-decoration-none rounded">Generar O. P.</a></li>
 					<li class="py-2"><a href="#" class="text-white d-inline-flex text-decoration-none rounded">Anular O.P</a></li>
@@ -45,10 +57,10 @@
 		@endif
 		@if(auth()->user()->hasRole('user'))
 			<li class="mb-1">
-				<button class="text-white btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+				<button class="text-white btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#report-collapse" aria-expanded="false">
 					Reportes
 				</button>
-				<div class="collapse" id="orders-collapse">
+				<div class="collapse" id="report-collapse">
 				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small w-100 mx-3">
 					<li class="py-2"><a href="#" class="text-white d-inline-flex text-decoration-none rounded">Generados</a></li>
 					<li class="py-2"><a href="#" class="text-white d-inline-flex text-decoration-none rounded">Anular</a></li>
@@ -56,7 +68,6 @@
 				</div>
 			</li>
 		@endif
- 
     </ul>
 	<hr>
     <div class="dropdown">

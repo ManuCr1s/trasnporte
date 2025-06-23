@@ -65,3 +65,31 @@ export const datesUserRegister = (element,url) =>{
     });
     return tableUser;
 }
+export const datesPeriodRegister = (element,url) =>{
+    let tablePeriod;
+    $.ajax({
+        headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
+        type:'POST',
+        url:url,
+        success:function(response){
+            $('.preloader').hide();
+            let data = response.data,
+                columnas=[
+                    {
+                        data:'id',
+                        class:'text-center'
+                    },
+                    {
+                        data:'name',
+                        class:'text-center'
+                    },
+                    {
+                        data:'description',
+                        class:'text-center'
+                    }
+                ];
+            tablePeriod = allTables(element,data,columnas);
+        }
+    });
+    return tablePeriod;
+}

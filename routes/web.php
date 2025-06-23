@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PeriodController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,7 +32,9 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function(){
     Route::post('users/destroy',[UserController::class,'destroy']);
 });
 Route::middleware(['auth','role:user'])->prefix('user')->group(function(){
-    
+    Route::get('periods/create',[PeriodController::class,'create'])->name('create_period');
+    Route::post('periods/index',[PeriodController::class,'index']);
+    Route::post('periods',[PeriodController::class,'store']);
 });
 /*
 Route::controller(UserController::class)->group(function(){

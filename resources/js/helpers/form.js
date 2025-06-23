@@ -124,3 +124,51 @@ export const sendDataActiveUser = (form,url) => {
         });
     });
 }
+export const sendDatesForm = ({
+        event,
+        trigger,
+        method= 'POST',
+        url,
+        data=null,
+        validate=null,
+        onSuccess = () => {},
+        onError =() => {},
+        beforeSend=() => {},
+        onComplete = () =>{}
+    }) => {
+        trigger && trigger.on(event,function(e){
+            e.preventDefault();
+            $('.preloader').show();
+            beforeSend();
+            const  finalData = (typeof data === 'function')? data():data;
+            if (validate) {
+                const result = validateDatesForm(finalData,{'name':'Año','description':'Periodo'});
+                if (!result.status) {
+                    $('.preloader').hide();
+                    messageBackend(false, result.message);
+                    return;
+                }
+            }
+            $.ajax({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                method,
+                url,
+                data: finalData,
+                success: (response) => {
+                    $('.preloader').hide();
+                    response.status ? onSuccess(response) : onError(response);
+                    onComplete();
+                },
+                error: (xhr) => {
+                    $('.preloader').hide();
+                    if (xhr.status === 422) {
+                        const errors = xhr.responseJSON.errors;
+                        messageBackend(false, Object.values(errors)[0][0]);
+                    } else {
+                        messageBackend(false, 'Error del servidor');
+                    }
+                    onComplete();
+                }
+            });
+        });
+    }

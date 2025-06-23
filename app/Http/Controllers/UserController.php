@@ -48,12 +48,11 @@ class UserController extends Controller
             $role = Role::firstOrCreate(['name' => 'user']);
             $person->assignRole($role);
         } catch (\Throwable $th) {
-            /*
             return response()->json([
                 'status' => false,
                 'message' => "Por favor comuniquese con el administrador"
-            ]);*/
-            return $th;
+            ]);
+            /* return $th; */
         }
          return response()->json([
             'status' => true,

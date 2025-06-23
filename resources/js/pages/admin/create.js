@@ -1,5 +1,5 @@
 import {datesUserRegister} from '../../helpers/ajax';
-import { sendDniPerson,onlyNumbers,sendDatesNewUser,sendDataActiveUser} from '../../helpers/form';
+import {sendDatesForm,sendDniPerson,onlyNumbers,sendDatesNewUser,sendDataActiveUser} from '../../helpers/form';
 import { clickTbodyDates, clickAddModal} from '../../helpers/functions';
 import route from '../../helpers/route';
 $(function(){
