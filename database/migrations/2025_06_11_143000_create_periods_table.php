@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',4)->unique();
             $table->string('description',50);
+            $table->boolean('status')->default(false);
             $table->string('created_by',8)->nullable();
             $table->string('updated_by',8)->nullable();
             $table->foreign('created_by')->references('dni')->on('users')->nullOnDelete();

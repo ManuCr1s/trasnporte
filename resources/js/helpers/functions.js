@@ -7,7 +7,7 @@ export const clickTbodyDates = (datatable,extraOptions = {}) => {
         $('#'+extraOptions.email+'Edit').val(btn.data('email'));
     });
 };
-export const clickAddModal = (element,extraOptions = {}) =>{
+export const clickAddModal = (element,extraOptions = {},option='') =>{
     let messages = {
         title:'', 
         message:'', 
@@ -17,9 +17,9 @@ export const clickAddModal = (element,extraOptions = {}) =>{
         let btn = $(this);
         if(btn.data('status')==1){
                 messages = {
-                    title:'Desactivar Usuario',
-                    message:'¿Desea desactivar al Usuario?',
-                    resumen:'El usuario desactivado ya no tendra acceso al sistema'
+                    title: 'Desactivar '+option,
+                    message:'¿Desea desactivar el '+option+'?',
+                    resumen:'El'+option+' desactivado, esta deshabilidato en el sistema'
                 }
                 $('#'+extraOptions.title).text(messages.title);
                 $('#'+extraOptions.message).text(messages.message);
@@ -28,9 +28,9 @@ export const clickAddModal = (element,extraOptions = {}) =>{
                 $('#'+extraOptions.status).val(btn.data('status'));
         }else{
                 messages = {
-                    title:'Activar Usuario',
-                    message:'¿Desea activar al Usuario?',
-                    resumen:'El usuario activado tendra acceso al sistema'
+                    title:'Activar '+option,
+                    message:'¿Desea activar el '+option+'?',
+                    resumen:'El '+option+' activado, esta habilidato en el sistema'
                 }
                 $('#'+extraOptions.title).text(messages.title);
                 $('#'+extraOptions.message).text(messages.message);

@@ -13,7 +13,7 @@ class PeriodController extends Controller
      */
     public function index()
     {
-        $period = Period::select('id','name','description')->get();
+        $period = Period::select('id','name','description','status')->get();
         return datatables()->of($period)->toJson();
     }
 
@@ -75,8 +75,29 @@ class PeriodController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        if($player = Period::where('status',true)->where('id','!=',$request->input('id'))->count() === 1){
+            return response()->json([
+                'status' => false,
+                'message' => 'Solo puede tener un periodo activo' 
+            ]);
+        }else{
+            try {
+                $user = Period::find($request->input('id'));
+                $user->status = !$request->input('status');
+                $user->save();
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "Por favor comuniquese con el administrador"
+                ]); 
+            }
+                 return response()->json([
+                    'status' => true,
+                    'message' => "Se cambio correctamente el estado del periodo"
+                ]);
+        }
+        
     }
 }

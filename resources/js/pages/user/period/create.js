@@ -1,6 +1,7 @@
 import { messageBackend } from "../../../helpers/alert";
 import { sendDatesForm } from "../../../helpers/form";
 import { datesPeriodRegister } from "../../../helpers/ajax";
+import { clickAddModal} from '../../../helpers/functions';
 import route from "../../../helpers/route";
 $(function(){
     $('.preloader').hide();
@@ -18,4 +19,17 @@ $(function(){
             messageBackend(true,message.message);
         }
      });
+    clickAddModal($('#tablePeriodRegister'),{title:'title',message:'messages',resumen:'resumen',dni:'id',status:'status'},'Periodo');
+    sendDatesForm({
+        event:'submit',
+        trigger:$('#updatePeriodForm'),
+        url:route.destroyPeriod,
+        data:()=>$('#updatePeriodForm').serialize(),  
+        onSuccess: (message) => {
+            messageBackend(true,message.message);
+        },
+        onError:(message) => {  
+            messageBackend(false,message.message);
+        }
+    });
 }); 

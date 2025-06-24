@@ -1,5 +1,5 @@
 import {datesUserRegister} from '../../helpers/ajax';
-import {sendDatesForm,sendDniPerson,onlyNumbers,sendDatesNewUser,sendDataActiveUser} from '../../helpers/form';
+import {sendDniPerson,onlyNumbers,sendDatesNewUser,sendDataActiveUser} from '../../helpers/form';
 import { clickTbodyDates, clickAddModal} from '../../helpers/functions';
 import route from '../../helpers/route';
 $(function(){
@@ -8,6 +8,6 @@ $(function(){
     $('#dni').on('keypress',onlyNumbers);
     sendDatesNewUser($('#datesAddNewUser'),route.createUser);
     clickTbodyDates($('#tableUserRegister'),{dni:'dni',lastname:'apellidos',name:'nombres',email:'email'});
-    clickAddModal($('#tableUserRegister'),{title:'title',message:'messages',resumen:'resumen',dni:'dniUser',status:'status'});
+    clickAddModal($('#tableUserRegister'),{title:'title',message:'messages',resumen:'resumen',dni:'dniUser',status:'status'},'Usuario');
     sendDataActiveUser($('#activeUserForm'),route.destroy);
 }); 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PeriodController;
-
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +35,8 @@ Route::middleware(['auth','role:user'])->prefix('user')->group(function(){
     Route::get('periods/create',[PeriodController::class,'create'])->name('create_period');
     Route::post('periods/index',[PeriodController::class,'index']);
     Route::post('periods',[PeriodController::class,'store']);
+    Route::post('periods/destroy',[PeriodController::class,'destroy']);
+    Route::get('orders/create',[OrderController::class,'create'])->name('create_order');
 });
 /*
 Route::controller(UserController::class)->group(function(){

@@ -8,7 +8,7 @@
 		@if(auth()->user()->hasRole('admin'))
 			<li class="mb-1">
 				<button class="text-white btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-					Inicio
+					<i class="fa-solid fa-house me-2"></i> Inicio
 				</button>
 				<div class="collapse" id="home-collapse">
 				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small w-100 mx-3">
@@ -20,7 +20,7 @@
 		@if(auth()->user()->hasRole('admin'))
 			<li class="mb-1">
 				<button class="text-white btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-					Usuarios
+					<i class="fa-solid fa-user me-2"></i> Usuarios
 				</button>
 				<div class="collapse" id="dashboard-collapse">
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small w-100 mx-3">
@@ -32,7 +32,7 @@
 		@if(auth()->user()->hasRole('user'))
 			<li class="mb-1">
 				<button class="text-white btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#periodo-collapse" aria-expanded="false">
-					Periodo
+					<i class="fa-solid fa-calendar me-2"></i> Periodo
 				</button>
 				<div class="collapse" id="periodo-collapse">
 				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small w-100 mx-3">
@@ -44,13 +44,11 @@
 		@if(auth()->user()->hasRole('user'))
 			<li class="mb-1">
 				<button class="text-white btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#orden-collapse" aria-expanded="false">
-					Orden Pago
+					<i class="fa-solid fa-pen-clip me-2"></i> Orden Pago
 				</button>
 				<div class="collapse" id="orden-collapse">
 				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small w-100 mx-3">
-					<li class="py-2"><a href="#" class="text-white d-inline-flex text-decoration-none rounded">Generar O. P.</a></li>
-					<li class="py-2"><a href="#" class="text-white d-inline-flex text-decoration-none rounded">Anular O.P</a></li>
-					<li class="py-2"><a href="#" class="text-white d-inline-flex text-decoration-none rounded">Editar O.P.</a></li>
+					<li class="py-2"><a href="{{route('create_order')}}" class="text-white d-inline-flex text-decoration-none rounded">Generar O. P.</a></li>
 				</ul>
 				</div>
 			</li>
@@ -58,12 +56,11 @@
 		@if(auth()->user()->hasRole('user'))
 			<li class="mb-1">
 				<button class="text-white btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#report-collapse" aria-expanded="false">
-					Reportes
+					 	<i class="fa-solid fa-chart-simple me-2"></i>Reportes
 				</button>
 				<div class="collapse" id="report-collapse">
 				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small w-100 mx-3">
-					<li class="py-2"><a href="#" class="text-white d-inline-flex text-decoration-none rounded">Generados</a></li>
-					<li class="py-2"><a href="#" class="text-white d-inline-flex text-decoration-none rounded">Anular</a></li>
+					<li class="py-2"><a href="#" class="text-white d-inline-flex text-decoration-none rounded">Reportes</a></li>
 				</ul>
 				</div>
 			</li>

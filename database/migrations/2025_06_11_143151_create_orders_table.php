@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('id_person',8);
             $table->unsignedBigInteger('id_rate');
             $table->unsignedBigInteger('id_period');
+            $table->string('created_by',8)->nullable();
+            $table->string('updated_by',8)->nullable();
+            $table->foreign('created_by')->references('dni')->on('users')->nullOnDelete();
+            $table->foreign('updated_by')->references('dni')->on('users')->nullOnDelete();
             $table->foreign('id_person')->references('dni')->on('persons')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_rate')->references('id')->on('rates')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_period')->references('id')->on('periods')->onDelete('cascade')->onUpdate('cascade');

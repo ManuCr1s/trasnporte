@@ -86,6 +86,36 @@ export const datesPeriodRegister = (element,url) =>{
                     {
                         data:'description',
                         class:'text-center'
+                    },
+                    {
+                        data:null,
+                        render:function(data, type, row){
+                                return (row.status === 1)?`
+                                    <center>
+                                        <span class="rounded-circle" style="width:15px; height:15px; display:inline-block; background-color:#239b56;"></span>
+                                    </center>
+                                `:`
+                                    <center>
+                                        <span class="rounded-circle" style="width:15px; height:15px; display:inline-block; background-color:#c0392b;"></span>
+                                    </center>
+                                `;
+                        }
+                    },
+                    {
+                        data:null,
+                        render: function (data, type, row) {
+                                let btn,response = `<center>`;
+                                if(data.status === 1){
+                                    btn=    `<button id="updatePeriod" type="button" class="btn text-danger deleteUser" data-bs-toggle="modal" data-bs-target="#modalUpdatePeriod" data-id=`+row.id+` data-status=`+row.status+`>
+                                                    <i class="fa-regular fa-calendar"></i>
+                                            </button></center>`;
+                                }else{
+                                    btn=    `<button id="updatePeriod" type="button" class="btn text-success deleteUser" data-bs-toggle="modal" data-bs-target="#modalUpdatePeriod" data-id=`+row.id+` data-status=`+row.status+`>
+                                                    <i class="fa-regular fa-calendar"></i>
+                                            </button></center>`;
+                                }
+                                return response+btn;
+                        }
                     }
                 ];
             tablePeriod = allTables(element,data,columnas);
