@@ -41,6 +41,7 @@ Route::middleware(['auth','role:user'])->prefix('user')->group(function(){
     Route::get('rates/create',[RateContronller::class,'create'])->name('create_rate');
     Route::post('rates/index',[RateContronller::class,'index']);
     Route::post('rates',[RateContronller::class,'store']);
+    Route::post('rates/update',[RateContronller::class,'update']);
     Route::post('rates/destroy',[RateContronller::class,'destroy']);
     Route::get('orders/create',[OrderController::class,'create'])->name('create_order');
 });

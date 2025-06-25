@@ -2,15 +2,15 @@
     <div class="modal-dialog">
     <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Crear Taza de Pago</h1>
+                <h1 class="modal-title fs-5">Editar Taza de Pago</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="sendDatesRate">
+            <form id="sendUpdateDatesRate">
                 <div class="modal-body px-5">
                         <div class="row px-4 py-1 d-flex justify-content-around">
                             <div class="col-2">
                                 <label for="">Numero</label>
-                                <input type="text" id="idEdit" class="form-control"  name="name" readonly>
+                                <input type="text" id="idEdit" class="form-control"  name="id" readonly>
                             </div>
                             <div class="col-5">
                                 <label for="">Nombre Taza</label>

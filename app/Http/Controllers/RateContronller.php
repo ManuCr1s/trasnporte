@@ -68,9 +68,25 @@ class RateContronller extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(RateRequest $request)
     {
-        //
+        try {
+            $rate = Rate::find($request->input('id'));
+            $rate->name = $request->input('name');
+            $rate->amount = $request->input('amount');
+            $rate->created_by = auth()->id();
+            $rate->save();
+        } catch (\Throwable $th) {
+            return $th;
+            /* return response()->json([
+                'status' => false,
+                'message' => "Por favor comuniquese con el administrador"
+            ]); */ 
+        }
+        return response()->json([
+            'status' => true,
+            'message' => "Se cambio correctamente la taza de pago"
+        ]);
     }
 
     /**
@@ -81,6 +97,7 @@ class RateContronller extends Controller
         try {
             $rate = Rate::find($request->input('id'));
             $rate->status = !$request->input('status');
+            $rate->created_by = auth()->id();
             $rate->save();
         }catch(\Throwable $th){
             return $th;
@@ -91,7 +108,7 @@ class RateContronller extends Controller
         }
         return response()->json([
             'status' => true,
-            'message' => "Se cambio correctamente el nombre del equipo"
+            'message' => "Se cambio correctamente la taza de pago"
         ]);
     }
 }
