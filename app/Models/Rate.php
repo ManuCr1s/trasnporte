@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Period extends Model
+class Rate extends Model
 {
     use HasFactory;
     protected $fillable = [
         'name',
-        'description',
+        'amount',
         'status',
         'created_by',
         'updated_by',
@@ -20,8 +20,8 @@ class Period extends Model
         $this->attributes['name'] = strtoupper($value);
     }
 
-    public function setDescriptionAttribute($value)
+    public function setAmountAttribute($value)
     {
-        $this->attributes['description'] = strtoupper($value);
+        $this->attributes['amount'] = strtoupper($value);
     }
 }

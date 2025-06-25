@@ -41,6 +41,18 @@
 				</div>
 			</li>
 		@endif
+			@if(auth()->user()->hasRole('user'))
+			<li class="mb-1">
+				<button class="text-white btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#tazas-collapse" aria-expanded="false">
+					<i class="fa-solid fa-money-check-dollar me-2"></i> Tazas
+				</button>
+				<div class="collapse" id="tazas-collapse">
+				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small w-100 mx-3">
+					<li class="py-2"><a href="{{route('create_rate')}}" class="text-white d-inline-flex text-decoration-none rounded">Crear Tazas</a></li>
+				</ul>
+				</div>
+			</li>
+		@endif
 		@if(auth()->user()->hasRole('user'))
 			<li class="mb-1">
 				<button class="text-white btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#orden-collapse" aria-expanded="false">

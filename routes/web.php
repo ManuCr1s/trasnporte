@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RateContronller;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +38,10 @@ Route::middleware(['auth','role:user'])->prefix('user')->group(function(){
     Route::post('periods/index',[PeriodController::class,'index']);
     Route::post('periods',[PeriodController::class,'store']);
     Route::post('periods/destroy',[PeriodController::class,'destroy']);
+    Route::get('rates/create',[RateContronller::class,'create'])->name('create_rate');
+    Route::post('rates/index',[RateContronller::class,'index']);
+    Route::post('rates',[RateContronller::class,'store']);
+    Route::post('rates/destroy',[RateContronller::class,'destroy']);
     Route::get('orders/create',[OrderController::class,'create'])->name('create_order');
 });
 /*

@@ -16,10 +16,10 @@ $(function(){
             messageBackend(true,message.message);
         },
         onError:(message) => {  
-            messageBackend(true,message.message);
+            messageBackend(false,message.message);
         }
      });
-    clickAddModal($('#tablePeriodRegister'),{title:'title',message:'messages',resumen:'resumen',dni:'id',status:'status'},'Periodo');
+    clickAddModal($('#tablePeriodRegister'),'.deletePeriod',{title:'title',message:'messages',resumen:'resumen',dni:'id',status:'status'},'Periodo');
     sendDatesForm({
         event:'submit',
         trigger:$('#updatePeriodForm'),

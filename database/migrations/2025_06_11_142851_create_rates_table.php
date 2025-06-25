@@ -15,6 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('amount');
+            $table->boolean('status')->default(true);
+            $table->string('created_by',8)->nullable();
+            $table->string('updated_by',8)->nullable();
+            $table->foreign('created_by')->references('dni')->on('users')->nullOnDelete();
+            $table->foreign('updated_by')->references('dni')->on('users')->nullOnDelete();
             $table->dateTime('created_at',$precision=3);
             $table->dateTime('updated_at',$precision=3);
         });

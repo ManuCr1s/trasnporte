@@ -106,11 +106,72 @@ export const datesPeriodRegister = (element,url) =>{
                         render: function (data, type, row) {
                                 let btn,response = `<center>`;
                                 if(data.status === 1){
-                                    btn=    `<button id="updatePeriod" type="button" class="btn text-danger deleteUser" data-bs-toggle="modal" data-bs-target="#modalUpdatePeriod" data-id=`+row.id+` data-status=`+row.status+`>
+                                    btn=    `<button id="updatePeriod" type="button" class="btn text-danger deletePeriod" data-bs-toggle="modal" data-bs-target="#modalUpdatePeriod" data-id=`+row.id+` data-status=`+row.status+`>
                                                     <i class="fa-regular fa-calendar"></i>
                                             </button></center>`;
                                 }else{
-                                    btn=    `<button id="updatePeriod" type="button" class="btn text-success deleteUser" data-bs-toggle="modal" data-bs-target="#modalUpdatePeriod" data-id=`+row.id+` data-status=`+row.status+`>
+                                    btn=    `<button id="updatePeriod" type="button" class="btn text-success deletePeriod" data-bs-toggle="modal" data-bs-target="#modalUpdatePeriod" data-id=`+row.id+` data-status=`+row.status+`>
+                                                    <i class="fa-regular fa-calendar"></i>
+                                            </button></center>`;
+                                }
+                                return response+btn;
+                        }
+                    }
+                ];
+            tablePeriod = allTables(element,data,columnas);
+        }
+    });
+    return tablePeriod;
+}
+export const datesRateRegister  = (element,url) => {
+    let tablePeriod;
+    $.ajax({
+        headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
+        type:'POST',
+        url:url,
+        success:function(response){
+            $('.preloader').hide();
+            let data = response.data,
+                columnas=[
+                    {
+                        data:'id',
+                        class:'text-center'
+                    },
+                    {
+                        data:'name',
+                        class:'text-center'
+                    },
+                    {
+                        data:'amount',
+                        class:'text-center'
+                    },
+                    {
+                        data:null,
+                        render:function(data, type, row){
+                                return (row.status === 1)?`
+                                    <center> 
+                                        <span class="rounded-circle" style="width:15px; height:15px; display:inline-block; background-color:#239b56;"></span>
+                                    </center>
+                                `:`
+                                    <center>
+                                        <span class="rounded-circle" style="width:15px; height:15px; display:inline-block; background-color:#c0392b;"></span>
+                                    </center>
+                                `;
+                        }
+                    },
+                    {
+                        data:null,
+                        render: function (data, type, row) {
+                                let btn,response = `<center><button  type="button" class="btn text-info editRate" data-bs-toggle="modal" data-bs-target="#editRateModal" data-id=`+row.id+`
+                                        data-name="${row.name}" data-amount="${row.amount}">
+                                            <i class="fa fa-edit" ></i>
+                                        </button>`;
+                                if(data.status === 1){
+                                    btn=    `<button type="button" class="btn text-danger deleteRate" data-bs-toggle="modal" data-bs-target="#modalDeleteRate" data-id=`+row.id+` data-status=`+row.status+`>
+                                                    <i class="fa-regular fa-calendar"></i>
+                                            </button></center>`;
+                                }else{
+                                    btn=    `<button type="button" class="btn text-success deleteRate" data-bs-toggle="modal" data-bs-target="#modalDeleteRate" data-id=`+row.id+` data-status=`+row.status+`>
                                                     <i class="fa-regular fa-calendar"></i>
                                             </button></center>`;
                                 }

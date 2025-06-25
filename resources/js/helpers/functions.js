@@ -7,19 +7,27 @@ export const clickTbodyDates = (datatable,extraOptions = {}) => {
         $('#'+extraOptions.email+'Edit').val(btn.data('email'));
     });
 };
-export const clickAddModal = (element,extraOptions = {},option='') =>{
+export const clickRatesDates = (datatable,extraOptions = {}) => {
+    datatable.on('click','.editRate',function(){
+        let btn = $(this);
+        $('#'+extraOptions.name+'Edit').val(btn.data('name'));
+        $('#'+extraOptions.amount+'Edit').val(btn.data('amount'));
+        $('#'+extraOptions.id+'Edit').val(btn.data('id'));
+    });
+};
+export const clickAddModal = (element,action,extraOptions = {},option='') =>{
     let messages = {
         title:'', 
         message:'', 
         resumen:''
     }
-    element.on('click','.deleteUser',function(){
+    element.on('click',action,function(){
         let btn = $(this);
         if(btn.data('status')==1){
                 messages = {
                     title: 'Desactivar '+option,
-                    message:'¿Desea desactivar el '+option+'?',
-                    resumen:'El'+option+' desactivado, esta deshabilidato en el sistema'
+                    message:'¿Desea desactivar '+option+'?',
+                    resumen:'El '+option+' desactivado, esta deshabilidato en el sistema'
                 }
                 $('#'+extraOptions.title).text(messages.title);
                 $('#'+extraOptions.message).text(messages.message);

@@ -7,6 +7,9 @@ const route ={
     destroy:`${APP_NAME}/admin/users/destroy`,
     createPeriod :`${APP_NAME}/user/periods`,
     indexPeriod:`${APP_NAME}/user/periods/index`,
-    destroyPeriod:`${APP_NAME}/user/periods/destroy`
+    destroyPeriod:`${APP_NAME}/user/periods/destroy`,
+    createRate:`${APP_NAME}/user/rates`,
+    indexRate:`${APP_NAME}/user/rates/index`,
+    destroyRate:`${APP_NAME}/user/rates/destroy`,
 };
 export default route;   
