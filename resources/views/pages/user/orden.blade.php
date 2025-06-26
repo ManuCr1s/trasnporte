@@ -15,7 +15,7 @@
                             <button type="button" class="btn btn-primary fw-bolder" data-bs-toggle="modal" data-bs-target="#modalCreateOrder">
                                 Ingresar Orden
                             </button>
-                            <x-modals.users.order/>
+                            <x-modals.users.create-order/>
                     </nav>
                 </div>
                 <div class="d-flex align-items-center">
@@ -27,7 +27,7 @@
                 </div>
                 <div class="d-flex align-items-center">
                         <div class="table-responsive w-100 px-5">
-                            <table class="table" id="tablePeriodRegister"  class="table table-striped table-bordered">
+                            <table class="table" id="tableOrderRegister"  class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th class="text-center">N°</th>
@@ -50,5 +50,5 @@
     </div>
 @endsection
 @push('scripts')
-    @vite(['resources/js/pages/user/period/create.js'])
+    @vite(['resources/js/pages/user/orden/create.js'])
 @endpush/

@@ -1,4 +1,7 @@
+import { messageBackend } from "./alert";
 import { allTables } from "./datatables";
+import route from "../helpers/route";
+
 export const datesUserRegister = (element,url) =>{
     let tableUser;
     $.ajax({
@@ -143,6 +146,82 @@ export const datesRateRegister  = (element,url) => {
                     },
                     {
                         data:'amount',
+                        class:'text-center'
+                    },
+                    {
+                        data:null,
+                        render:function(data, type, row){
+                                return (row.status === 1)?`
+                                    <center> 
+                                        <span class="rounded-circle" style="width:15px; height:15px; display:inline-block; background-color:#239b56;"></span>
+                                    </center>
+                                `:`
+                                    <center>
+                                        <span class="rounded-circle" style="width:15px; height:15px; display:inline-block; background-color:#c0392b;"></span>
+                                    </center>
+                                `;
+                        }
+                    },
+                    {
+                        data:null,
+                        render: function (data, type, row) {
+                                let btn,response = `<center><button  type="button" class="btn text-info editRate" data-bs-toggle="modal" data-bs-target="#editRateModal" data-id=`+row.id+`
+                                        data-name="${row.name}" data-amount="${row.amount}">
+                                            <i class="fa fa-edit" ></i>
+                                        </button>`;
+                                if(data.status === 1){
+                                    btn=    `<button type="button" class="btn text-danger deleteRate" data-bs-toggle="modal" data-bs-target="#modalDeleteRate" data-id=`+row.id+` data-status=`+row.status+`>
+                                                    <i class="fa-regular fa-calendar"></i>
+                                            </button></center>`;
+                                }else{
+                                    btn=    `<button type="button" class="btn text-success deleteRate" data-bs-toggle="modal" data-bs-target="#modalDeleteRate" data-id=`+row.id+` data-status=`+row.status+`>
+                                                    <i class="fa-regular fa-calendar"></i>
+                                            </button></center>`;
+                                }
+                                return response+btn;
+                        }
+                    }
+                ];
+            tablePeriod = allTables(element,data,columnas);
+        }
+    });
+    return tablePeriod;
+}
+export const datesOrderRegister = (element,url) => {
+     let tablePeriod;
+    $.ajax({
+        headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
+        type:'POST',
+        url:url,
+        success:function(response){
+            $('.preloader').hide();
+            if('status' in response){
+                return messageBackend(false,response.messages,route.showPeriod);
+            }
+            let data = response.data,
+                columnas=[
+                    {
+                        data:'correlative',
+                        class:'text-center'
+                    },
+                    {
+                        data:'description',
+                        class:'text-center'
+                    },
+                    {
+                        data:'period',
+                        class:'text-center'
+                    },
+                    {
+                        data:'amount',
+                        class:'text-center'
+                    },
+                    {
+                        data:'person',
+                        class:'text-center'
+                    },
+                    {
+                        data:'create',
                         class:'text-center'
                     },
                     {

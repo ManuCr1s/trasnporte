@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Rate extends Component
+class ActivePeriod extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class Rate extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.modals.users.rate');
+        return view('components.modals.users.active-period');
     }
 }

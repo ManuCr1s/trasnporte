@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class order extends Component
+class CreateOrder extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class order extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.modals.users.order');
+        return view('components.modals.users.create-order');
     }
 }

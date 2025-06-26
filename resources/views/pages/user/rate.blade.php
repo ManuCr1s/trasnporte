@@ -15,7 +15,7 @@
                             <button type="button" class="btn btn-primary fw-bolder" data-bs-toggle="modal" data-bs-target="#modalCreateRate">
                                 Ingresar Taza
                             </button>
-                            <x-modals.users.rate/>
+                            <x-modals.users.create-rate/>
                     </nav>
                 </div>
                 <div class="d-flex align-items-center">

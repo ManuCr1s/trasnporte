@@ -15,7 +15,7 @@
                             <button type="button" class="btn btn-primary fw-bolder" data-bs-toggle="modal" data-bs-target="#modalAddYear">
                                 Ingresar Periodo
                             </button>
-                            <x-modals.users.create/>
+                            <x-modals.users.create-period/>
                     </nav>
                 </div>
                 <div class="d-flex align-items-center">
@@ -43,7 +43,7 @@
                             </table>
                         </div> 
                 </div>
-                <x-modals.users.period/>
+                <x-modals.users.active-period/>
         </div>  
     </div>
 @endsection

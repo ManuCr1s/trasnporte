@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Create extends Component
+class CreatePeriod extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class Create extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.modals.users.create');
+        return view('components.modals.users.create-period');
     }
 }
