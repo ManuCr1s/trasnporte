@@ -1,6 +1,7 @@
 import { messageBackend } from "./alert";
 import { allTables } from "./datatables";
 import route from "../helpers/route";
+import { createOptions } from "./functions";
 
 export const datesUserRegister = (element,url) =>{
     let tableUser;
@@ -262,4 +263,16 @@ export const datesOrderRegister = (element,url) => {
         }
     });
     return tablePeriod;
+}
+export const ratesName = (selec,url) =>{
+    $.ajax({
+        headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
+        type:'POST',
+        url:url,
+        success: function(date){
+            let myData = JSON.parse(date);
+            let options = createOptions(myData);
+            selec.html(options);
+        }
+    });
 }

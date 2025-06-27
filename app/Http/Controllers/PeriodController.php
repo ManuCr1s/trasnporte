@@ -51,9 +51,13 @@ class PeriodController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $period = Period::select('id','name')->where('status','=',true)->get();
+        return response()->json([
+            'status' => true,
+            'data' => $period
+        ]);
     }
 
     /**
@@ -71,13 +75,9 @@ class PeriodController extends Controller
     {
         //
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Request $request)
     {
-        if($player = Period::where('status',true)->where('id','!=',$request->input('id'))->count() === 1){
+        if($period = Period::where('status',true)->where('id','!=',$request->input('id'))->count() === 1){
             return response()->json([
                 'status' => false,
                 'message' => 'Solo puede tener un periodo activo' 

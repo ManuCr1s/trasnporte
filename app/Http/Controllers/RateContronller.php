@@ -52,9 +52,10 @@ class RateContronller extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $rate = Rate::select('id','name','amount')->where('status','=',true)->get();
+        return json_encode($rate);
     }
 
     /**
@@ -74,14 +75,13 @@ class RateContronller extends Controller
             $rate = Rate::find($request->input('id'));
             $rate->name = $request->input('name');
             $rate->amount = $request->input('amount');
-            $rate->created_by = auth()->id();
+            $rate->updated_by = auth()->id();
             $rate->save();
         } catch (\Throwable $th) {
-            return $th;
-            /* return response()->json([
+            return response()->json([
                 'status' => false,
                 'message' => "Por favor comuniquese con el administrador"
-            ]); */ 
+            ]); 
         }
         return response()->json([
             'status' => true,
@@ -97,14 +97,13 @@ class RateContronller extends Controller
         try {
             $rate = Rate::find($request->input('id'));
             $rate->status = !$request->input('status');
-            $rate->created_by = auth()->id();
+            $rate->updated_by = auth()->id();
             $rate->save();
         }catch(\Throwable $th){
-            return $th;
-            /*             return response()->json([
+            return response()->json([
                 'status' => false,
                 'message' => "Por favor comuniquese con el administrador"
-            ]);  */
+            ]);  
         }
         return response()->json([
             'status' => true,

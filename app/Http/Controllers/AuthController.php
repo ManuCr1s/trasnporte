@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AuthRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Person;
 
 class AuthController extends Controller
 {
@@ -44,50 +45,64 @@ class AuthController extends Controller
         return redirect('/');
     }
     public function dni(Request $request){
-        $user = User::where('dni',$request->input('dni'))->exists();
-        if($user){
-            return response()->json([
-                'status' => false,
-                'message' => 'El Dni ya se encuentra registrado'
-            ]);
-        }else{
-            $curl = curl_init();
-            // Buscar dni
-            curl_setopt_array($curl, array(
-            // para user api versión 2
-            CURLOPT_URL => 'https://api.apis.net.pe/v2/reniec/dni?numero=' . $request->input('dni'),
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 2,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'Referer: https://apis.net.pe/consulta-dni-api',
-                'Authorization: Bearer ' . $this->token
-            ),
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
-            $person = json_decode($response);       
-            if($person == null){
-                $person = array('status'=>false,'message'=>'Por favor verifique su conexion a internet');
-            }else if(property_exists($person,'nombres')){
-                $person->status = true;
-            }else if($person->message == 'dni no valido'){
-                $person->status = false;
-                $person->apellidoPaterno = '';
-                $person->apellidoMaterno = '';
-                $person->message = 'Por favor verifique su DNI y registre su nombre y apellido';
-            }else if($person->message == 'not found'){
-                $person->status = false;
-                $person->apellidoPaterno = '';
-                $person->apellidoMaterno = '';
-                $person->message = 'Por favor ingrese sus nombres y apellidos';
+        if (Auth::user()->hasRole('admin')) {
+            $user = User::where('dni',$request->input('dni'))->exists();
+            if($user){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'El Dni ya se encuentra registrado'
+                ]);
             }
-            return response()->json($person);
+      
+        }else{
+            $user = Person::where('dni',$request->input('dni'))->exists();
+            if($user){
+                $user = Person::where('dni',$request->input('dni'))->first();
+                $response = [
+                    'status' => true,
+                    'apellidoPaterno' => $user->lastname,
+                    'apellidoMaterno' => '',
+                    'nombres'=> $user->name
+                ];
+                return response()->json($response);
+            }
         }
-        return $request->all();
+        $curl = curl_init();
+        // Buscar dni
+        curl_setopt_array($curl, array(
+        // para user api versión 2
+        CURLOPT_URL => 'https://api.apis.net.pe/v2/reniec/dni?numero=' . $request->input('dni'),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_SSL_VERIFYPEER => 0,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 2,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Referer: https://apis.net.pe/consulta-dni-api',
+            'Authorization: Bearer ' . $this->token
+        ),
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $person = json_decode($response);       
+        if($person == null){
+            $person = array('status'=>false,'message'=>'Por favor verifique su conexion a internet');
+        }else if(property_exists($person,'nombres')){
+            $person->status = true;
+        }else if($person->message == 'dni no valido'){
+            $person->status = false;
+            $person->apellidoPaterno = '';
+            $person->apellidoMaterno = '';
+            $person->message = 'Por favor verifique su DNI y registre su nombre y apellido';
+        }else if($person->message == 'not found'){
+            $person->status = false;
+            $person->apellidoPaterno = '';
+            $person->apellidoMaterno = '';
+            $person->message = 'Por favor ingrese sus nombres y apellidos';
+        }
+        return response()->json($person);
+        
     }
 }

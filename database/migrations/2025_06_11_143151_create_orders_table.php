@@ -14,19 +14,22 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('correlative')->unique();
-            $table->boolean('status');
+            $table->boolean('status')->default(true);
             $table->string('description');
             $table->string('id_person',8);
             $table->unsignedBigInteger('id_rate');
             $table->unsignedBigInteger('id_period');
             $table->string('created_by',8)->nullable();
             $table->string('updated_by',8)->nullable();
+            $table->string('deleted_by',8)->nullable();
+            $table->string('motive_delete')->nullable();
+            $table->foreign('deleted_by')->references('dni')->on('users')->nullOnDelete();
             $table->foreign('created_by')->references('dni')->on('users')->nullOnDelete();
             $table->foreign('updated_by')->references('dni')->on('users')->nullOnDelete();
             $table->foreign('id_person')->references('dni')->on('persons')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_rate')->references('id')->on('rates')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_period')->references('id')->on('periods')->onDelete('cascade')->onUpdate('cascade');
-            $table->dateTime('deleted_at',$precision=3);
+            $table->dateTime('deleted_at',$precision=3)->nullable();
             $table->dateTime('created_at',$precision=3);
             $table->dateTime('updated_at',$precision=3);
         });

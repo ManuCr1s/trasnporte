@@ -12,7 +12,7 @@
                         <span class="fs-5 fw-semibold">CREAR ORDEN</span>
                     </a>
                     <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                            <button type="button" class="btn btn-primary fw-bolder" data-bs-toggle="modal" data-bs-target="#modalCreateOrder">
+                            <button type="button" class="btn btn-primary fw-bolder" data-bs-toggle="modal" data-bs-target="#modalCreateOrder" id="btnModalOrder">
                                 Ingresar Orden
                             </button>
                             <x-modals.users.create-order/>

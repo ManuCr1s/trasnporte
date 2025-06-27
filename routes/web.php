@@ -25,12 +25,12 @@ Route::controller(AuthController::class)->group(function(){
 Route::middleware(['auth','role:admin|user'])->group(function(  ){
     Route::get('/dashboard',[AuthController::class,'begin'])->name('begin');
     Route::post('/loguot',[AuthController::class,'logout'])->name('logout');
+    Route::post('/dni',[AuthController::class,'dni']);
 });
 Route::middleware(['auth','role:admin'])->prefix('admin')->group(function(){
     Route::get('users/create',[UserController::class,'create'])->name('create');
     Route::post('users/index',[UserController::class,'index']);
     Route::post('users',[UserController::class,'store']);
-    Route::post('/dni',[AuthController::class,'dni']);
     Route::post('users/destroy',[UserController::class,'destroy']);
 });
 Route::middleware(['auth','role:user'])->prefix('user')->group(function(){
@@ -38,13 +38,16 @@ Route::middleware(['auth','role:user'])->prefix('user')->group(function(){
     Route::post('periods/index',[PeriodController::class,'index']);
     Route::post('periods',[PeriodController::class,'store']);
     Route::post('periods/destroy',[PeriodController::class,'destroy']);
+    Route::post('periods/show',[PeriodController::class,'show']);
     Route::get('rates/create',[RateContronller::class,'create'])->name('create_rate');
     Route::post('rates/index',[RateContronller::class,'index']);
     Route::post('rates',[RateContronller::class,'store']);
+    Route::post('rates/show',[RateContronller::class,'show']);
     Route::post('rates/update',[RateContronller::class,'update']);
     Route::post('rates/destroy',[RateContronller::class,'destroy']);
     Route::get('orders/create',[OrderController::class,'create'])->name('create_order');
     Route::post('orders/index',[OrderController::class,'index']);
+    Route::post('orders',[OrderController::class,'store']);
 });
 /*
 Route::controller(UserController::class)->group(function(){

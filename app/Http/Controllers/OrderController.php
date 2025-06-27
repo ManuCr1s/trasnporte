@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Period;
+use App\Models\Person;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\OrderRequest;
 
 class OrderController extends Controller
 {
@@ -49,9 +51,59 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-        //
+         try {
+                $person = Person::where('dni','=',$request->input('dni'))->first();
+                if(!$person){
+                    $person = Person::create([
+                        'dni' => $request->input('dni'),
+                        'name' => $request->input('name'),
+                        'lastname' => $request->input('lastname')
+                    ]);
+                }
+                $year = $request->input('year');
+                $prefix = 'OP' . $year;
+
+                DB::transaction(function () use ($prefix, $request ,$year, &$correlative) {
+                    // Buscar último correlativo del año actual
+                    $last = Order::lockForUpdate()
+                        ->where('correlative', 'like', $prefix . '-%')
+                        ->orderBy('correlative', 'desc')
+                        ->first();
+
+                    // Extraer el número correlativo
+                    $lastNumber = $last
+                        ? intval(substr($last->correlative, -6)) // por ejemplo: "OP2025-000045" -> 45
+                        : 0;
+
+                    // Generar nuevo correlativo
+                    $number = str_pad($lastNumber + 1, 6, '0', STR_PAD_LEFT);
+                    $correlative = $prefix . '-' . $number;
+
+                    // Guardar orden (si deseas hacerlo aquí mismo)
+                    Order::create([
+                        'name'=> $request->input('name'),
+                        'correlative' => $correlative,
+                        'description' => $request->input('description'),
+                        'id_person' => $request->input('dni'),
+                        'id_rate' => $request->input('rate'),
+                        'id_period' => $request->input('period'),
+                        'created_by' => auth()->id(),
+                    ]);
+                });
+          
+        } catch (\Throwable $th) {
+            return $th;
+            return response()->json([
+                'status' => false,
+                'message' => "Por favor comuniquese con el administrador"
+            ]);
+        }
+        return response()->json([
+            'status' => true,
+            'message' => "Se ingresó correctamente el periodo"
+        ]);
     }
 
     /**

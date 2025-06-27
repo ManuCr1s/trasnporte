@@ -48,3 +48,17 @@ export const clickAddModal = (element,action,extraOptions = {},option='') =>{
         }   
     });
 }
+export const createOptions = (myData)=>{
+    let fragment = document.createDocumentFragment(); 
+    let defaultOption = document.createElement('option');
+    defaultOption.value = 0;
+    defaultOption.text = 'SELECCIONE';
+    fragment.appendChild(defaultOption);
+    $.each(myData, function(index, param) {
+        let option = document.createElement('option');
+        option.value = Object.values(param)[0];
+        option.text = Object.values(param)[1].toUpperCase()+' - '+Object.values(param)[2];
+        fragment.appendChild(option);
+    });
+    return fragment;
+}
