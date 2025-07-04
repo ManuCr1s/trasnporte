@@ -1,6 +1,7 @@
 import { datesOrderRegister, ratesName } from "../../../helpers/ajax";
 import { messageBackend } from "../../../helpers/alert";
 import { sendDatesForm, sendDniPerson} from "../../../helpers/form";
+import { createPage } from "../../../helpers/functions";
 import route from "../../../helpers/route";
 $(function(){
     $('.preloader').hide();
@@ -31,4 +32,5 @@ $(function(){
             messageBackend(false,response.message);
         }
     });
+    createPage($('#tableOrderRegister'));
 });

@@ -242,8 +242,13 @@ export const datesOrderRegister = (element,url) => {
                     {
                         data:null,
                         render: function (data, type, row) {
-                                let btn,response = `<center><button  type="button" class="btn text-info editRate" data-bs-toggle="modal" data-bs-target="#editRateModal" data-id=`+row.id+`
-                                        data-name="${row.name}" data-amount="${row.amount}">
+                                let btn,response = `<center><button  type="button" class="btn text-primary printOrder" data-id=`+data.id+`
+                                                    data-correlative="${data.correlative}" data-description="`+data.description+`" data-period="${data.period}" data-amount="${data.amount}" 
+                                                    data-person="${data.person}" data-create="${data.create}" data-rate="${data.rate}">
+                                            <i class="fa-solid fa-print"></i>
+                                        </button><button  type="button" class="btn text-info editOrder" data-bs-toggle="modal" data-bs-target="#editRateModal" data-id=`+data.id+`
+                                                    data-correlative="${data.correlative}" data-description=`+data.description+`" data-period="${data.period}" data-amount="${data.amount}" 
+                                                    data-person="${data.person}" data-create="${data.create}">
                                             <i class="fa fa-edit" ></i>
                                         </button>`;
                                 if(data.status === 1){
@@ -259,7 +264,7 @@ export const datesOrderRegister = (element,url) => {
                         }
                     }
                 ];
-            tablePeriod = allTables(element,data,columnas);
+            tablePeriod = allTables(element,data,columnas,{order: [[5, 'desc']]});
         }
     });
     return tablePeriod;

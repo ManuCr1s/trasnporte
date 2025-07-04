@@ -51,4 +51,4 @@
 @endsection
 @push('scripts')
     @vite(['resources/js/pages/user/orden/create.js'])
-@endpush/
+@endpush

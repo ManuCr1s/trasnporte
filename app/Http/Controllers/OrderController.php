@@ -22,13 +22,14 @@ class OrderController extends Controller
                  $order = Order::join('persons as pe','orders.id_person','=','pe.dni')
                     ->join('rates as ra','orders.id_rate','ra.id')
                     ->join('periods as pr','orders.id_period','pr.id')
-                    ->select('orders.correlative','orders.status','pr.name as period','orders.description', DB::raw('CONCAT(pe.name," ",pe.lastname) as person'),'ra.name','ra.amount','orders.created_at as create')
+                    ->select('orders.id','orders.correlative','orders.status','pr.name as period','orders.description','ra.name as rate',DB::raw('CONCAT(pe.name," ",pe.lastname) as person'),'ra.name','ra.amount','orders.created_at as create')
                     ->where('orders.id_period',function ($query) {
                         $query->select('id')
                             ->from('periods')
                             ->where('status', true)
                             ->limit(1);
                     })
+                    ->orderBy('orders.created_at', 'desc')
                     ->get();
                 return datatables()->of($order)->toJson();
         }else{
@@ -94,7 +95,6 @@ class OrderController extends Controller
                 });
           
         } catch (\Throwable $th) {
-            return $th;
             return response()->json([
                 'status' => false,
                 'message' => "Por favor comuniquese con el administrador"
