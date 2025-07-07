@@ -26,6 +26,8 @@ Route::middleware(['auth','role:admin|user'])->group(function(  ){
     Route::get('/dashboard',[AuthController::class,'begin'])->name('begin');
     Route::post('/loguot',[AuthController::class,'logout'])->name('logout');
     Route::post('/dni',[AuthController::class,'dni']);
+    Route::get('/pass',[AuthController::class,'pass'])->name('pass');
+    Route::post('/newpass',[AuthController::class,'passValidate']);
 });
 Route::middleware(['auth','role:admin'])->prefix('admin')->group(function(){
     Route::get('users/create',[UserController::class,'create'])->name('create');

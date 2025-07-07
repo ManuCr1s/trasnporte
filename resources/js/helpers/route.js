@@ -18,6 +18,7 @@ const route ={
     indexOrder:`${APP_NAME}/user/orders/index`,
     createOrder:`${APP_NAME}/user/orders`,
     destroyOrder:`${APP_NAME}/user/orders/destroy`,
-    updateOrder:`${APP_NAME}/user/orders/update`
+    updateOrder:`${APP_NAME}/user/orders/update`,
+    passUser:`${APP_NAME}/newpass`
 };
 export default route;   

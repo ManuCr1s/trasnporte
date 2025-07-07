@@ -7,12 +7,17 @@ use App\Http\Requests\AuthRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Person;
+use App\Http\Requests\PassRequest;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     public $token = 'apis-token-5761.59ZzjNAOFWADmBfvLbj8DvX98Yv1FDPH';
     public function showLogin(){
         return view('pages.login');
+    }
+    public function pass(){
+        return view('pages.pass');
     }
     public function login(AuthRequest $request){
         if(User::where('dni',$request->input('dni'))->value('status') == 1){
@@ -103,6 +108,23 @@ class AuthController extends Controller
             $person->message = 'Por favor ingrese sus nombres y apellidos';
         }
         return response()->json($person);
-        
+    }
+    public function passValidate(PassRequest $request){
+        try {
+            $user = User::find(auth()->id());
+            $user->password = Hash::make($request->input('password'));
+            $user->save();
+        } catch (\Throwable $th) {
+            return $th;
+            return response()->json([
+                'status' => false,
+                'message' => "Por favor comuniquese con el administrador",
+            ]);
+        }
+        return response()->json([
+            'status' => true,
+            'message' => "Se cambio correctamente la contraseña"
+        ]);   
+          
     }
 }

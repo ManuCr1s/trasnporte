@@ -21,10 +21,10 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'Delete User']);
         Permission::create(['name' => 'Create User']);
         $adminUser = User::query()->create([
-            'dni' => '73143090',
-            'name' => 'MANUEL',
-            'lastname' => 'CRISTOBAL NEYRA',
-            'password' =>Hash::make('73143090')
+            'dni' => '00000000',
+            'name' => 'ADMIN',
+            'lastname' => 'ADMINISTRADOR',
+            'password' =>Hash::make('00000000')
         ]);
         $role = Role::firstOrCreate(['name'=>'admin']);
         $permissionAdmin = Permission::query()->pluck('name');

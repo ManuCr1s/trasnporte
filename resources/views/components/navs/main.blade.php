@@ -86,7 +86,7 @@
 		</a>
 		<ul class="dropdown-menu dropdown-menu-dark text-small shadow">
 			<li><a class="dropdown-item" href="#">Ajustes</a></li>
-			<li><a class="dropdown-item" href="#">Perfil</a></li>
+			<li><a class="dropdown-item" href="{{route('pass')}}">Cambiar Contraseña</a></li>
 			<li><hr class="dropdown-divider"></li>
 			<li>
 				<form action="{{route('logout')}}" method="post">
