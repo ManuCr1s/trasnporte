@@ -242,23 +242,21 @@ export const datesOrderRegister = (element,url) => {
                     {
                         data:null,
                         render: function (data, type, row) {
-                                let btn,response = `<center><button  type="button" class="btn text-primary printOrder" data-id=`+data.id+`
+                                let btn,print= ` </button><button  type="button" class="btn text-info editOrder" data-bs-toggle="modal" data-bs-target="#editOrderModal" data-id=`+data.id+`
+                                                    data-description="`+data.description+`" data-rate="`+data.id_rate+`">
+                                                    <i class="fa fa-edit" ></i>
+                                                </button>`,response = `<center><button  type="button" class="btn text-primary printOrder"
                                                     data-correlative="${data.correlative}" data-description="`+data.description+`" data-period="${data.period}" data-amount="${data.amount}" 
-                                                    data-person="${data.person}" data-create="${data.create}" data-rate="${data.rate}">
+                                                    data-person="${data.person}" data-status="${data.status}" data-create="${data.create}" data-rate="${data.rate}">
                                             <i class="fa-solid fa-print"></i>
-                                        </button><button  type="button" class="btn text-info editOrder" data-bs-toggle="modal" data-bs-target="#editRateModal" data-id=`+data.id+`
-                                                    data-correlative="${data.correlative}" data-description=`+data.description+`" data-period="${data.period}" data-amount="${data.amount}" 
-                                                    data-person="${data.person}" data-create="${data.create}">
-                                            <i class="fa fa-edit" ></i>
-                                        </button>`;
+                                      `;
+                                    
                                 if(data.status === 1){
-                                    btn=    `<button type="button" class="btn text-danger deleteRate" data-bs-toggle="modal" data-bs-target="#modalDeleteRate" data-id=`+row.id+` data-status=`+row.status+`>
-                                                    <i class="fa-regular fa-calendar"></i>
+                                    btn=    `<button type="button" class="btn text-danger deleteOrder" data-bs-toggle="modal" data-bs-target="#modalDeleteOrder" data-id=`+data.id+` data-status=`+data.status+`>
+                                                <i class="fa-solid fa-trash"></i>
                                             </button></center>`;
                                 }else{
-                                    btn=    `<button type="button" class="btn text-success deleteRate" data-bs-toggle="modal" data-bs-target="#modalDeleteRate" data-id=`+row.id+` data-status=`+row.status+`>
-                                                    <i class="fa-regular fa-calendar"></i>
-                                            </button></center>`;
+                                    btn=    `</center>`;
                                 }
                                 return response+btn;
                         }

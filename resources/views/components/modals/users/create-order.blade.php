@@ -50,7 +50,7 @@
                                                          <div class="col-md-4 pr-1">
                                                             <div class="form-group">
                                                                 <label>Concepto de Pago</label>
-                                                                    <select name="rate" id="rate" class="form-control" ></select>
+                                                                <select name="rate" id="rate" class="form-control rate" ></select>
                                                             </div>
                                                         </div>
                                                     </div>

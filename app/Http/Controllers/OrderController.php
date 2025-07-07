@@ -22,7 +22,7 @@ class OrderController extends Controller
                  $order = Order::join('persons as pe','orders.id_person','=','pe.dni')
                     ->join('rates as ra','orders.id_rate','ra.id')
                     ->join('periods as pr','orders.id_period','pr.id')
-                    ->select('orders.id','orders.correlative','orders.status','pr.name as period','orders.description','ra.name as rate',DB::raw('CONCAT(pe.name," ",pe.lastname) as person'),'ra.name','ra.amount','orders.created_at as create')
+                    ->select('orders.id','orders.correlative','orders.id_rate','orders.status','pr.name as period','orders.description','ra.name as rate',DB::raw('CONCAT(pe.name," ",pe.lastname) as person'),'ra.name','ra.amount','orders.created_at as create')
                     ->where('orders.id_period',function ($query) {
                         $query->select('id')
                             ->from('periods')
@@ -125,16 +125,47 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+     /*    try {
+            $order = Order::find($request->input('id'));
+            $order->id_rate = $request->input('rate');
+            $order->description = $request->input('description');
+            $order->updated_by = auth()->id();
+            $order->save();
+        } catch (\Throwable $th) {
+            return $th;
+            return response()->json([
+                'status' => false,
+                'message' => "Por favor comuniquese con el administrador"
+            ]); 
+        }
+        return response()->json([
+            'status' => true,
+            'message' => "Se cambio correctamente los detalles de la Orden de Pago"
+        ]); */
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        try {
+            $order = Order::find($request->input('id'));
+            $order->status = !$request->input('status');
+            $order->motive_delete = $request->input('motive');
+            $order->deleted_by = auth()->id();
+            $order->save();
+        }catch(\Throwable $th){
+            return response()->json([
+                'status' => false,
+                'message' => "Por favor comuniquese con el administrador"
+            ]);  
+        }
+        return response()->json([
+            'status' => true,
+            'message' => "Se anulo correctamente la orden de Pago"
+        ]);
     }
 }

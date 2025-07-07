@@ -16,6 +16,14 @@ export const clickRatesDates = (datatable,extraOptions = {}) => {
         $('#'+extraOptions.id+'Edit').val(btn.data('id'));
     });
 };
+export const clickOrdersDates = (datatable,extraOptions = {}) => {
+    datatable.on('click','.editOrder',function(){
+        let btn = $(this);
+        $('#'+extraOptions.id+'Edit').val(btn.data('id'));
+        $('#'+extraOptions.description+'Edit').val(btn.data('description'));
+        $('#'+extraOptions.rate+'Edit').val(btn.data('rate'));
+    });
+};
 export const clickAddModal = (element,action,extraOptions = {},option='') =>{
     let messages = {
         title:'', 
@@ -149,156 +157,162 @@ export const createPage = (datatable) =>{
         doc.text(textoDividido,80, y+18, { align: "center",  maxWidth: 200, lineHeightFactor: 1.5 });
         y += alturaCelda;
 
-        // RECIBO 2
-        // ======= NUMERO RECIBO =============
-        doc.setFillColor(31, 94, 163); 
-        doc.rect(x, y + 35, 190, 7, "F");
-        doc.setFont(undefined, 'bold');
-        doc.setFontSize(9);
-        doc.setTextColor(255, 255, 255);
-        doc.text("ORDEN DE PAGO  "+btn.data('correlative'), 105, y+40, { align: "center" });
-        doc.setFont(undefined, 'normal');
-        y += alturaCelda;
+        if(btn.data('status') === 1){
+                // RECIBO 2
+                // ======= NUMERO RECIBO =============
+                doc.setFillColor(31, 94, 163); 
+                doc.rect(x, y + 35, 190, 7, "F");
+                doc.setFont(undefined, 'bold');
+                doc.setFontSize(9);
+                doc.setTextColor(255, 255, 255);
+                doc.text("ORDEN DE PAGO  "+btn.data('correlative'), 105, y+40, { align: "center" });
+                doc.setFont(undefined, 'normal');
+                y += alturaCelda;
 
-         // ======= PERIODO Y FECHA DE EMISION =============
-        doc.setFillColor(236, 240, 241); 
-        doc.rect(x, y+38, 40, 7, "F");
-        doc.rect(51, y+38, 93, 7, "F");
-        doc.rect(145, y+38, 55, 7, "F");
-        doc.setFont(undefined, 'bold');
-        doc.setFontSize(9);
-        doc.setTextColor(0, 0, 0);
-        doc.text("PERIODO - "+btn.data('period'),25, y+42, { align: "center" });
-        doc.setFont(undefined, 'italic');
-        doc.text("Fecha - "+fecha.toLocaleDateString(),180, y+42, { align: "center" });
-        doc.setFont(undefined, 'normal');
-        y += alturaCelda;
+                // ======= PERIODO Y FECHA DE EMISION =============
+                doc.setFillColor(236, 240, 241); 
+                doc.rect(x, y+38, 40, 7, "F");
+                doc.rect(51, y+38, 93, 7, "F");
+                doc.rect(145, y+38, 55, 7, "F");
+                doc.setFont(undefined, 'bold');
+                doc.setFontSize(9);
+                doc.setTextColor(0, 0, 0);
+                doc.text("PERIODO - "+btn.data('period'),25, y+42, { align: "center" });
+                doc.setFont(undefined, 'italic');
+                doc.text("Fecha - "+fecha.toLocaleDateString(),180, y+42, { align: "center" });
+                doc.setFont(undefined, 'normal');
+                y += alturaCelda;
 
-        // ======= TEXTO CAJERO Y HORA DE EMISION =============
-        doc.setFillColor(236, 240, 241); 
-        doc.rect(x, y+41, 134, 7, "F");
-        doc.rect(145, y+41, 55, 7, "F");
-        doc.setFontSize(9);
-        doc.setFont(undefined, 'italic');
-        doc.text("SR. CAJERO (A) SIRVASE EXTENDER EL RECIBO DE PAGO A FAVOR DE:",68, y+46, { align: "center" });
-        doc.text("Hora - "+fecha.toLocaleTimeString(),180, y+46, { align: "center" });
-        doc.setFont(undefined, 'normal');
-        y += alturaCelda;
- 
+                // ======= TEXTO CAJERO Y HORA DE EMISION =============
+                doc.setFillColor(236, 240, 241); 
+                doc.rect(x, y+41, 134, 7, "F");
+                doc.rect(145, y+41, 55, 7, "F");
+                doc.setFontSize(9);
+                doc.setFont(undefined, 'italic');
+                doc.text("SR. CAJERO (A) SIRVASE EXTENDER EL RECIBO DE PAGO A FAVOR DE:",68, y+46, { align: "center" });
+                doc.text("Hora - "+fecha.toLocaleTimeString(),180, y+46, { align: "center" });
+                doc.setFont(undefined, 'normal');
+                y += alturaCelda;
         
-         // ======= NOMBRES DE USUARIO =============
-        doc.setFillColor(236, 240, 241); 
-        doc.rect(x, y+44, 134, 7, "F");
-        doc.rect(145, y+44, 55, 7, "F");
-        doc.setFontSize(9);
-        doc.setFont(undefined, 'bold');
-        doc.text("NOMBRE:",x+3, y+49);
-        doc.setFont(undefined, 'normal');
-        doc.text(btn.data('person'),67, y+49, { align: "center" });
-        doc.setFont(undefined, 'normal');
-        y += alturaCelda; 
+                
+                // ======= NOMBRES DE USUARIO =============
+                doc.setFillColor(236, 240, 241); 
+                doc.rect(x, y+44, 134, 7, "F");
+                doc.rect(145, y+44, 55, 7, "F");
+                doc.setFontSize(9);
+                doc.setFont(undefined, 'bold');
+                doc.text("NOMBRE:",x+3, y+49);
+                doc.setFont(undefined, 'normal');
+                doc.text(btn.data('person'),67, y+49, { align: "center" });
+                doc.setFont(undefined, 'normal');
+                y += alturaCelda; 
 
-         // ======= TAZA DE PAGO =============
-        doc.setFillColor(236, 240, 241); 
-        doc.rect(x, y+47, 134, 7, "F");
-        doc.setFillColor(247, 220, 111); 
-        doc.rect(145, y+47, 55, 7, "F");
-        doc.setFontSize(9);
-        doc.setFont(undefined, 'bold');
-        doc.text("CONCEPTO:",x+3, y+52);
-        doc.setFont(undefined, 'normal');
-        doc.text(btn.data('rate'),85, y+52, { align: "center" });
-        doc.setFont(undefined, 'bold');
-        doc.text("Monto S/."+btn.data('amount').toString(),175, y+52, { align: "center" });
-        doc.setFont(undefined, 'normal');
-        y += alturaCelda; 
+                // ======= TAZA DE PAGO =============
+                doc.setFillColor(236, 240, 241); 
+                doc.rect(x, y+47, 134, 7, "F");
+                doc.setFillColor(247, 220, 111); 
+                doc.rect(145, y+47, 55, 7, "F");
+                doc.setFontSize(9);
+                doc.setFont(undefined, 'bold');
+                doc.text("CONCEPTO:",x+3, y+52);
+                doc.setFont(undefined, 'normal');
+                doc.text(btn.data('rate'),85, y+52, { align: "center" });
+                doc.setFont(undefined, 'bold');
+                doc.text("Monto S/."+btn.data('amount').toString(),175, y+52, { align: "center" });
+                doc.setFont(undefined, 'normal');
+                y += alturaCelda; 
 
-        // ======= DESCRIPCION DE LA ORDEN =============
-        doc.setFillColor(236, 240, 241); 
-        doc.rect(x, y+50, 134, 22, "F");
-        doc.rect(145, y+50, 55, 22, "F");
-        doc.setFontSize(9);
-        doc.setFont(undefined, 'bold');
-        doc.text("DESCRIPCION:",x+3, y+55);
-        doc.setFont(undefined, 'normal');
-        doc.text(textoDividido,80, y+59, { align: "center",  maxWidth: 200, lineHeightFactor: 1.5 });
-        y += alturaCelda;
- 
-        // RECIBO 3
-        // ======= NUMERO RECIBO =============
-        doc.setFillColor(31, 94, 163); 
-        doc.rect(x, y+77, 190, 7, "F");
-        doc.setFont(undefined, 'bold');
-        doc.setFontSize(9);
-        doc.setTextColor(255, 255, 255);
-        doc.text("ORDEN DE PAGO  "+btn.data('correlative'), 105, y+82, { align: "center" });
-        doc.setFont(undefined, 'normal');
-        y += alturaCelda;
+                // ======= DESCRIPCION DE LA ORDEN =============
+                doc.setFillColor(236, 240, 241); 
+                doc.rect(x, y+50, 134, 22, "F");
+                doc.rect(145, y+50, 55, 22, "F");
+                doc.setFontSize(9);
+                doc.setFont(undefined, 'bold');
+                doc.text("DESCRIPCION:",x+3, y+55);
+                doc.setFont(undefined, 'normal');
+                doc.text(textoDividido,80, y+59, { align: "center",  maxWidth: 200, lineHeightFactor: 1.5 });
+                y += alturaCelda;
 
-        // ======= PERIODO Y FECHA DE EMISION =============
-        doc.setFillColor(236, 240, 241); 
-        doc.rect(x, y+80, 40, 7, "F");
-        doc.rect(51, y+80, 93, 7, "F");
-        doc.rect(145, y+80, 55, 7, "F");
-        doc.setFont(undefined, 'bold');
-        doc.setFontSize(9);
-        doc.setTextColor(0, 0, 0);
-        doc.text("PERIODO - "+btn.data('period'),25, y+85, { align: "center" });
-        doc.setFont(undefined, 'italic');
-        doc.text("Fecha - "+fecha.toLocaleDateString(),180, y+85, { align: "center" });
-        doc.setFont(undefined, 'normal');
-        y += alturaCelda;
+                 // RECIBO 3
+                // ======= NUMERO RECIBO =============
+                doc.setFillColor(31, 94, 163); 
+                doc.rect(x, y+77, 190, 7, "F");
+                doc.setFont(undefined, 'bold');
+                doc.setFontSize(9);
+                doc.setTextColor(255, 255, 255);
+                doc.text("ORDEN DE PAGO  "+btn.data('correlative'), 105, y+82, { align: "center" });
+                doc.setFont(undefined, 'normal');
+                y += alturaCelda;
 
-        // ======= TEXTO CAJERO Y HORA DE EMISION =============
-        doc.setFillColor(236, 240, 241); 
-        doc.rect(x, y+83, 134, 7, "F");
-        doc.rect(145, y+83, 55, 7, "F");
-        doc.setFontSize(9);
-        doc.setFont(undefined, 'italic');
-        doc.text("SR. CAJERO (A) SIRVASE EXTENDER EL RECIBO DE PAGO A FAVOR DE:",68, y+88, { align: "center" });
-        doc.text("Hora - "+fecha.toLocaleTimeString(),180, y+88, { align: "center" });
-        doc.setFont(undefined, 'normal');
-        y += alturaCelda; 
+                // ======= PERIODO Y FECHA DE EMISION =============
+                doc.setFillColor(236, 240, 241); 
+                doc.rect(x, y+80, 40, 7, "F");
+                doc.rect(51, y+80, 93, 7, "F");
+                doc.rect(145, y+80, 55, 7, "F");
+                doc.setFont(undefined, 'bold');
+                doc.setFontSize(9);
+                doc.setTextColor(0, 0, 0);
+                doc.text("PERIODO - "+btn.data('period'),25, y+85, { align: "center" });
+                doc.setFont(undefined, 'italic');
+                doc.text("Fecha - "+fecha.toLocaleDateString(),180, y+85, { align: "center" });
+                doc.setFont(undefined, 'normal');
+                y += alturaCelda;
 
-        
-         // ======= NOMBRES DE USUARIO =============
-        doc.setFillColor(236, 240, 241); 
-        doc.rect(x, y+86, 134, 7, "F");
-        doc.rect(145, y+86, 55, 7, "F");
-        doc.setFontSize(9);
-        doc.setFont(undefined, 'bold');
-        doc.text("NOMBRE:",x+3, y+91);
-        doc.setFont(undefined, 'normal');
-        doc.text(btn.data('person'),67, y+91, { align: "center" });
-        doc.setFont(undefined, 'normal');
-        y += alturaCelda; 
+                // ======= TEXTO CAJERO Y HORA DE EMISION =============
+                doc.setFillColor(236, 240, 241); 
+                doc.rect(x, y+83, 134, 7, "F");
+                doc.rect(145, y+83, 55, 7, "F");
+                doc.setFontSize(9);
+                doc.setFont(undefined, 'italic');
+                doc.text("SR. CAJERO (A) SIRVASE EXTENDER EL RECIBO DE PAGO A FAVOR DE:",68, y+88, { align: "center" });
+                doc.text("Hora - "+fecha.toLocaleTimeString(),180, y+88, { align: "center" });
+                doc.setFont(undefined, 'normal');
+                y += alturaCelda; 
 
-         // ======= TAZA DE PAGO =============
-        doc.setFillColor(236, 240, 241); 
-        doc.rect(x, y+89, 134, 7, "F");
-        doc.setFillColor(247, 220, 111); 
-        doc.rect(145, y+89, 55, 7, "F");
-        doc.setFontSize(9);
-        doc.setFont(undefined, 'bold');
-        doc.text("CONCEPTO:",x+3, y+94);
-        doc.setFont(undefined, 'normal');
-        doc.text(btn.data('rate'),85, y+94, { align: "center" });
-        doc.setFont(undefined, 'bold');
-        doc.text("Monto S/."+btn.data('amount').toString(),175, y+94, { align: "center" });
-        doc.setFont(undefined, 'normal');
-        y += alturaCelda; 
+                
+                // ======= NOMBRES DE USUARIO =============
+                doc.setFillColor(236, 240, 241); 
+                doc.rect(x, y+86, 134, 7, "F");
+                doc.rect(145, y+86, 55, 7, "F");
+                doc.setFontSize(9);
+                doc.setFont(undefined, 'bold');
+                doc.text("NOMBRE:",x+3, y+91);
+                doc.setFont(undefined, 'normal');
+                doc.text(btn.data('person'),67, y+91, { align: "center" });
+                doc.setFont(undefined, 'normal');
+                y += alturaCelda; 
 
-        // ======= DESCRIPCION DE LA ORDEN =============
-        doc.setFillColor(236, 240, 241); 
-        doc.rect(x, y+92, 134, 22, "F");
-        doc.rect(145, y+92, 55, 22, "F");
-        doc.setFontSize(9);
-        doc.setFont(undefined, 'bold');
-        doc.text("DESCRIPCION:",x+3, y+98);
-        doc.setFont(undefined, 'normal');
-        doc.text(textoDividido,80, y+102, { align: "center",  maxWidth: 200, lineHeightFactor: 1.5 });
-        y += alturaCelda;  
+                // ======= TAZA DE PAGO =============
+                doc.setFillColor(236, 240, 241); 
+                doc.rect(x, y+89, 134, 7, "F");
+                doc.setFillColor(247, 220, 111); 
+                doc.rect(145, y+89, 55, 7, "F");
+                doc.setFontSize(9);
+                doc.setFont(undefined, 'bold');
+                doc.text("CONCEPTO:",x+3, y+94);
+                doc.setFont(undefined, 'normal');
+                doc.text(btn.data('rate'),85, y+94, { align: "center" });
+                doc.setFont(undefined, 'bold');
+                doc.text("Monto S/."+btn.data('amount').toString(),175, y+94, { align: "center" });
+                doc.setFont(undefined, 'normal');
+                y += alturaCelda; 
 
+                // ======= DESCRIPCION DE LA ORDEN =============
+                doc.setFillColor(236, 240, 241); 
+                doc.rect(x, y+92, 134, 22, "F");
+                doc.rect(145, y+92, 55, 22, "F");
+                doc.setFontSize(9);
+                doc.setFont(undefined, 'bold');
+                doc.text("DESCRIPCION:",x+3, y+98);
+                doc.setFont(undefined, 'normal');
+                doc.text(textoDividido,80, y+102, { align: "center",  maxWidth: 200, lineHeightFactor: 1.5 });
+                y += alturaCelda;
+        }else{
+            doc.setTextColor(231, 76, 60);
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(50);  
+            doc.text('ANULADO',105, 40, { align: "center" });         
+        }       
         // ======= MOSTRAR VISOR PDF ============= 
         const blobUrl = doc.output("bloburl");
             window.open(blobUrl, '_blank', 'width=1000,height=700');

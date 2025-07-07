@@ -1,7 +1,7 @@
 import { datesOrderRegister, ratesName } from "../../../helpers/ajax";
 import { messageBackend } from "../../../helpers/alert";
 import { sendDatesForm, sendDniPerson} from "../../../helpers/form";
-import { createPage } from "../../../helpers/functions";
+import { createPage,clickAddModal,clickOrdersDates } from "../../../helpers/functions";
 import route from "../../../helpers/route";
 $(function(){
     $('.preloader').hide();
@@ -19,7 +19,7 @@ $(function(){
         }
     });
     sendDniPerson($('#btnDni'),route.dni,$('#dni'),$('#name'),$('#lastname'));
-    ratesName($('#rate'),route.showRates);
+    ratesName($('.rate'),route.showRates);
     sendDatesForm({
         event:'submit',
         trigger:$('#datesAddNewOrder'),
@@ -33,4 +33,30 @@ $(function(){
         }
     });
     createPage($('#tableOrderRegister'));
+    clickAddModal($('#tableOrderRegister'),'.deleteOrder',{title:'title',message:'messages',resumen:'resumen',dni:'id',status:'status'},'Orden');
+    sendDatesForm({
+        event:'submit',
+        trigger:$('#deleteOrderForm'),
+        url:route.destroyOrder,
+        data:()=>$('#deleteOrderForm').serialize(), 
+        onSuccess: (response)=>{
+           messageBackend(true,response.message);
+        },
+        onError: (response)=>{
+            messageBackend(false,response.message);
+        }
+    });
+    clickOrdersDates($('#tableOrderRegister'),{id:'id',description:'description',rate:'rate'});
+    sendDatesForm({
+        event:'submit',
+        trigger:$('#sendUpdateDatesOrder'),
+        url:route.updateOrder,
+        data:()=>$('#sendUpdateDatesOrder').serialize(), 
+        onSuccess: (response)=>{
+           messageBackend(true,response.message);
+        },
+        onError: (response)=>{
+            messageBackend(false,response.message);
+        }
+    });
 });

@@ -46,6 +46,8 @@
                             </table>
                         </div> 
                 </div>
+                <x-modals.users.active-order/>
+                <x-modals.users.edit-order/>
         </div>  
     </div>
 @endsection

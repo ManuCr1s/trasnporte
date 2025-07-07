@@ -48,6 +48,8 @@ Route::middleware(['auth','role:user'])->prefix('user')->group(function(){
     Route::get('orders/create',[OrderController::class,'create'])->name('create_order');
     Route::post('orders/index',[OrderController::class,'index']);
     Route::post('orders',[OrderController::class,'store']);
+    Route::post('orders/destroy',[OrderController::class,'destroy']);
+    Route::post('orders/update',[OrderController::class,'update']);
 });
 /*
 Route::controller(UserController::class)->group(function(){
